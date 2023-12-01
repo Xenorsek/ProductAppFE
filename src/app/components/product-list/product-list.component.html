@@ -1,0 +1,69 @@
+<div class="container mt-4">
+    <h2>Lista Produktów</h2>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Dodaj produkt
+      </button>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Kod</th>
+                <th>Nazwa</th>
+                <th>Cena w PLN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{ product.id }}</td>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginacja -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="pageNumber === 1">
+              <button class="page-link" (click)="changePage(pageNumber - 1)">Previous</button>
+            </li>
+
+            <li class="page-item" [class.disabled]="showedProducts === totalProducts">
+              <button class="page-link" (click)="changePage(pageNumber + 1)">Next</button>
+            </li>
+
+            <li class="page-item">
+                <div class="page-link">
+                  {{showedProducts}}/{{totalProducts}}
+                </div>
+              </li>
+
+            <li class="page-item">
+                <select id="pageSize" class="page-link" [(ngModel)]="pageSize" (change)="changePageSize()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Dodaj produkt</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <app-product-create></app-product-create>
+        </div>
+      </div>
+    </div>
+</div>

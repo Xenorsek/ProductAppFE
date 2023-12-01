@@ -1,0 +1,34 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Nazwa</label>
+      <input type="text" class="form-control" id="name" formControlName="name" required>
+      <div class="text-danger" *ngIf="productForm.get('price')?.touched">
+        <div *ngIf="productForm.get('name')?.errors?.required">Nazwa jest wymagana</div>
+        <div *ngIf="productForm.get('name')?.errors?.maxlength">Nazwa nie może przekraczać 150 znaków</div>
+      </div>
+
+    </div>
+  
+    <div class="form-group">
+      <label for="price">Cena</label>
+      <input type="text" class="form-control" id="price" formControlName="price" required>
+      <div class="text-danger" *ngIf="productForm.get('price')?.touched">
+        <div *ngIf="productForm.get('price')?.errors?.required">Cena jest wymagana</div>
+        <div *ngIf="productForm.get('price')?.errors?.pattern">Niepoprawny format ceny</div>
+        <div *ngIf="productForm.get('price')?.errors?.min">Cena nie może być ujemna</div>
+        <div *ngIf="productForm.get('price')?.errors?.max">Cena nie może być większa niż 99999</div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="code">Kod</label>
+      <input type="text" class="form-control" id="code" formControlName="code" required>
+      <div class="text-danger" *ngIf="productForm.get('code')?.touched">
+        <div *ngIf="productForm.get('code')?.errors?.required">Kod jest wymagany</div>
+        <div *ngIf="productForm.get('code')?.errors?.maxlength">Kod nie może przekraczać 10 znaków</div>
+    </div>
+    </div>
+    <div class="modal-footer mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid || isCreating">Utwórz produkt</button>
+    </div>
+  </form>
